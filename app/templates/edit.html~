@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+ <form action=" " method="post">
+ <dl> 
+   <dt>NO: 
+   <dd> <input type=text name=no>
+   <dt>NAME:
+   <dd><input type=text name=name>
+   <dt>AGE:
+   <dd><input type=text name=age>
+   <dd><input type=submit name=submit value=submit>
+ </dl>
+</form>
+
+{% endblock %}
+</body>
+</html>

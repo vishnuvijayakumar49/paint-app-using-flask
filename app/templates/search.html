@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+																																																														<body>
+<table border="1" style="width:100%">
+  <tr>
+	<th> no </th>
+	<th> name</th>
+	<th> age </th>
+  </tr>      
+  
+  
+  {% for row in rows %}
+  <tr>
+	{% for ro in row %}
+     <td>{{ ro }}</td>
+	{% endfor %}
+  </tr> 
+   {% endfor %}
+ 
+ </table>
+{% endblock %}
+

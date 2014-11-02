@@ -1,0 +1,41 @@
+from flask import *
+from app import app
+import sqlite3
+
+@app.route('/')
+def home():
+	return render_template('paint.html')
+	
+@app.route('/<imagename>', methods=['POST'])
+def save(imagename =None):
+	db=sqlite3.connect('paint.db')
+	c=db.cursor()
+	c.execute("INSERT INTO box (data,name) \
+		VALUES (?,?)",[request.form["data"],request.form["name"]])
+	db.commit()
+	db.close()
+	return render_template('paint.html')
+
+
+@app.route('/gallery')
+def view():
+	db=sqlite3.connect('paint.db')
+	c=db.cursor()
+	c.execute("SELECT * FROM box ORDER BY id desc")
+	posts=[dict(data=i[0],name=i[1]) for i in c.fetchall()]
+	db.commit()	
+	return render_template('view.html',
+                               posts=posts)
+   
+@app.route('/gallery/<imagename>')
+def load(imagename=None):
+	conn=sqlite3.connect('paint.db')
+	c=conn.cursor()
+	c.execute("SELECT * FROM box WHERE name=?",[imagename])
+	posts=[dict(id=i[0],data=i[1],name=i[2]) for i in c.fetchall()]
+	return render_template('picload.html',posts=posts)
+
+
+
+
+

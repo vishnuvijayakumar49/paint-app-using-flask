@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<canvas id="canvas" width="650" height="450" style="border:5px solid black; background-color:white;"></canvas>
+
+{% for post in posts %}
+<div align="left">
+<p>pic no:{{post.id}}</p>
+<p>pic name:{{post.name}}</p><br>
+<input type=button id= {{ post.data }} value="click to load" onclick="load(this.id)"><br>
+</div>
+<script type="text/javascript">
+function load(data){
+var canvas = document.getElementById("canvas");
+var context=canvas.getContext('2d');
+l=JSON.parse(data);
+for (i in l){
+if (l[i]["Type"]=='circle'){
+context.beginPath();
+context.arc(l[i]["X0"],l[i]["Y0"],l[i]["radius"], 0, Math.PI*2, true);
+context.strokeStyle=l[i]['color']
+context.lineWidth=l[i]['linewidth']
+
+context.stroke();
+context.closePath();
+}
+if (l[i]["Type"]=='rectangle'){
+startx=l[i]["X0"]
+starty=l[i]["Y0"]
+endx=l[i]["XN"];
+endy=l[i]["YN"];
+x=Math.min(endx,startx);
+y=Math.min(endy,starty);
+rectw=Math.abs(endx-startx);
+recth=Math.abs(endy-starty);
+context.strokeStyle=l[i]['color']
+context.lineWidth=l[i]['linewidth']
+context.strokeRect(x,y,rectw,recth);
+
+}
+if(l[i]['Type']=='line'){
+context.beginPath()
+x0=l[i]['X0']
+y0=l[i]['Y0']
+x1=l[i]['XN']
+y1=l[i]['YN']
+context.moveTo(x0,y0)
+context.lineTo(x1,y1)
+context.lineWidth=l[i]['linewidth'];
+context.strokeStyle=l[i]['color'];
+context.stroke()
+context.closePath()
+}
+if(l[i]['Type']=='pencil'){
+   context.beginPath();
+   context.moveTo(l[i]["X0"],l[i]["Y0"]);
+   context.lineTo(l[i]["XN"],l[i]["YN"]);
+   context.strokeStyle=l[i]['color'];
+   context.lineWidth=l[i]['linewidth'];
+   context.stroke();
+   context.closePath();
+}
+}
+}
+</script>
+ {% endfor %}
+{% endblock %}

@@ -1,0 +1,11 @@
+<!DOTYPE html>
+<html>
+<head>
+    <title> WEBPAGE </title>
+</head>
+<body>
+<a href="http://127.0.0.1:5000/edit">insert content</a>
+<a href="http://127.0.0.1:5000/view">view table</a>
+</body>
+</html>
+
